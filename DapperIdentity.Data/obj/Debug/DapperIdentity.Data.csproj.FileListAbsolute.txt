@@ -1,0 +1,14 @@
+D:\workspace\DapperIdentity\DapperIdentity.Data\bin\Debug\DapperIdentity.Data.dll
+D:\workspace\DapperIdentity\DapperIdentity.Data\bin\Debug\DapperIdentity.Data.pdb
+D:\workspace\DapperIdentity\DapperIdentity.Data\bin\Debug\Dapper.dll
+D:\workspace\DapperIdentity\DapperIdentity.Data\bin\Debug\DapperIdentity.Core.dll
+D:\workspace\DapperIdentity\DapperIdentity.Data\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\workspace\DapperIdentity\DapperIdentity.Data\bin\Debug\DapperIdentity.Core.pdb
+D:\workspace\DapperIdentity\DapperIdentity.Data\bin\Debug\DapperIdentity.Core.dll.config
+D:\workspace\DapperIdentity\DapperIdentity.Data\bin\Debug\Dapper.pdb
+D:\workspace\DapperIdentity\DapperIdentity.Data\bin\Debug\Dapper.xml
+D:\workspace\DapperIdentity\DapperIdentity.Data\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\workspace\DapperIdentity\DapperIdentity.Data\obj\Debug\DapperIdentity.Data.csprojResolveAssemblyReference.cache
+D:\workspace\DapperIdentity\DapperIdentity.Data\obj\Debug\DapperIdentity.Data.csproj.CoreCompileInputs.cache
+D:\workspace\DapperIdentity\DapperIdentity.Data\obj\Debug\DapperIdentity.Data.dll
+D:\workspace\DapperIdentity\DapperIdentity.Data\obj\Debug\DapperIdentity.Data.pdb
