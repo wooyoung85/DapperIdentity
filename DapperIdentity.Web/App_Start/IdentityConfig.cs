@@ -1,31 +1,12 @@
 ﻿using System;
-using System.Threading.Tasks;
+using DapperIdentity.Data.Identity;
 using IdentityTest.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 
 namespace DapperIdentity.Web
 {
-    public class EmailService : IIdentityMessageService
-    {
-        public Task SendAsync(IdentityMessage message)
-        {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
-        }
-    }
-
-    public class SmsService : IIdentityMessageService
-    {
-        public Task SendAsync(IdentityMessage message)
-        {
-            // Plug in your SMS service here to send a text message.
-            return Task.FromResult(0);
-        }
-    }
-
     // 이 응용 프로그램에서 사용되는 응용 프로그램 사용자 관리자를 구성합니다. UserManager는 ASP.NET Identity에서 정의하며 응용 프로그램에서 사용됩니다.
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
@@ -36,7 +17,7 @@ namespace DapperIdentity.Web
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>() as DbManager));
             // 사용자 이름에 대한 유효성 검사 논리 구성
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
@@ -70,8 +51,7 @@ namespace DapperIdentity.Web
                 Subject = "보안 코드",
                 BodyFormat = "보안 코드는 {0}입니다."
             });
-            manager.EmailService = new EmailService();
-            manager.SmsService = new SmsService();
+            
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {

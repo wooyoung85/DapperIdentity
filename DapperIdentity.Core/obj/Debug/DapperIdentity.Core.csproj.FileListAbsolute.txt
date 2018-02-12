@@ -6,3 +6,4 @@ D:\workspace\DapperIdentity\DapperIdentity.Core\bin\Debug\Microsoft.AspNet.Ident
 D:\workspace\DapperIdentity\DapperIdentity.Core\obj\Debug\DapperIdentity.Core.csproj.CoreCompileInputs.cache
 D:\workspace\DapperIdentity\DapperIdentity.Core\obj\Debug\DapperIdentity.Core.dll
 D:\workspace\DapperIdentity\DapperIdentity.Core\obj\Debug\DapperIdentity.Core.pdb
+D:\workspace\DapperIdentity\DapperIdentity.Core\obj\Debug\DapperIdentity.Core.csprojResolveAssemblyReference.cache

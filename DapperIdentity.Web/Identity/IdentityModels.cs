@@ -1,12 +1,15 @@
-﻿using System.Security.Claims;
+﻿using System.Configuration;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using DapperIdentity.Data.Connections;
+using DapperIdentity.Data.Identity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace IdentityTest.Models
 {
     // ApplicationUser 클래스에 더 많은 속성을 추가하여 사용자의 프로필 데이터를 추가할 수 있습니다. 자세한 내용은 https://go.microsoft.com/fwlink/?LinkID=317594를 참조하세요.
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityMember
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -17,16 +20,16 @@ namespace IdentityTest.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : DbManager
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public ApplicationDbContext(string connectionName)
+            : base(connectionName)
         {
         }
 
         public static ApplicationDbContext Create()
         {
-            return new ApplicationDbContext();
+            return new ApplicationDbContext(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
         }
     }
 }
