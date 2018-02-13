@@ -1,0 +1,12 @@
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Release\DapperIdentity.Data.dll
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Release\DapperIdentity.Data.pdb
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Release\Dapper.dll
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Release\DapperIdentity.Core.dll
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Release\Microsoft.AspNet.Identity.Core.dll
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Release\DapperIdentity.Core.pdb
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Release\Dapper.pdb
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Release\Dapper.xml
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Release\Microsoft.AspNet.Identity.Core.xml
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\obj\Release\DapperIdentity.Data.csprojResolveAssemblyReference.cache
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\obj\Release\DapperIdentity.Data.dll
+C:\Users\08408\Desktop\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\obj\Release\DapperIdentity.Data.pdb

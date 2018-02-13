@@ -1,5 +1,4 @@
-﻿using DapperIdentity.Core.Entities;
-using DapperIdentity.Data.Connections;
+﻿using DapperIdentity.Core.Identity;
 using DapperIdentity.Data.Repositories;
 using DapperIdentity.Web.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -14,11 +13,11 @@ namespace DapperIdentity.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public AccountController()
         {
-            _userManager = new UserManager<User>(new UserRepository(new SqlConnectionFactory()));
+            _userManager = new UserManager<IdentityUser>(new UserRepository<IdentityUser>());
         }
 
         //
@@ -41,6 +40,15 @@ namespace DapperIdentity.Web.Controllers
             {
                 //check to see if the account exists
                 var user = await _userManager.FindAsync(model.Email.TrimEnd(), model.Password);
+
+                // check if username/password pair match.                
+                if (user != null)
+                {
+                    // Now user have entered correct username and password.
+                    // Time to change the security stamp
+                    await _userManager.UpdateSecurityStampAsync(user.Id);
+                }               
+
                 if (user != null)
                 {
                     //Check if the account has already had its email confirmed.  In this example, the account will always be confirmed, but this is here for demonstration purposes.
@@ -94,7 +102,7 @@ namespace DapperIdentity.Web.Controllers
 
                 //Create the User object.  If you have customized this beyond this example, make sure you update this to contain your new fields.  
                 //The confirmation token in our example is ultimately for show.  Make sure to modify the RegisterViewModel and the Register view if you have customized the object.
-                var user = new User { UserName = model.Email.TrimEnd(), Nickname = model.Nickname.TrimEnd(), IsConfirmed = true, ConfirmationToken = confirmationToken, CreatedDate = DateTime.UtcNow };
+                var user = new IdentityUser { UserName = model.Email.TrimEnd(), Nickname = model.Nickname.TrimEnd(), IsConfirmed = true, ConfirmationToken = confirmationToken, CreatedDate = DateTime.UtcNow };
 
                 //Create the user
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -193,86 +201,6 @@ namespace DapperIdentity.Web.Controllers
         }
 
         //
-        // POST: /Account/ExternalLogin
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
-        {
-            // Request a redirect to the external login provider
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-        }
-
-        //
-        // GET: /Account/ExternalLoginCallback
-        [AllowAnonymous]
-        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
-        {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-            if (loginInfo == null)
-            {
-                return RedirectToAction("Login");
-            }
-
-            // Sign in the user with this external login provider if the user already has a login
-            var user = await _userManager.FindAsync(loginInfo.Login);
-            if (user != null)
-            {
-                await SignInAsync(user, isPersistent: false);
-                return RedirectToLocal(returnUrl);
-            }
-            ViewBag.ReturnUrl = returnUrl;
-            ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-        }
-
-        /// <summary>
-        /// If you choose to implement Google, Facebook or Twitter auth, you will need to make some slight changes to ExternalLoginConfirmationViewModel, this action and
-        /// ExternalLoginConfirmation.cshtml to account  for changes to the User object including any information you want to collect.  You can use the form to gather this information
-        /// or if you feel that some of this information is available to you from the source location (such as from Google) you can gather this information from claims.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="returnUrl"></param>
-        /// <returns></returns>
-        // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Manage");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                //here we can either use information we gathered with claims that will be contained in the info object, or we can use the data from the form - both is available to us.
-                var user = new User { UserName = model.Email.TrimEnd(), Nickname = model.Nickname.TrimEnd(), CreatedDate = DateTime.UtcNow, IsConfirmed = true };
-                var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await _userManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await SignInAsync(user, isPersistent: false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
-            }
-
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
-        }
-
-        //
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -290,7 +218,7 @@ namespace DapperIdentity.Web.Controllers
             return View();
         }
 
-        private async Task SignInAsync(User user, bool isPersistent)
+        private async Task SignInAsync(IdentityUser user, bool isPersistent)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = await _userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
@@ -302,7 +230,7 @@ namespace DapperIdentity.Web.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        private async Task ResendConfirmationToken(User user)
+        private async Task ResendConfirmationToken(IdentityUser user)
         {
             //create a new confirmation token
             var confirmationToken = Guid.NewGuid().ToString();
@@ -311,9 +239,6 @@ namespace DapperIdentity.Web.Controllers
             user.ConfirmationToken = confirmationToken;
             user.CreatedDate = DateTime.UtcNow;
             await _userManager.UpdateAsync(user);
-
-            //send the new confirmation link to the user
-            //await EmailConfirmationHelper.SendRegistrationEmail(confirmationToken, user.UserName);
         }
 
         protected override void Dispose(bool disposing)

@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DapperIdentity.Data</RootNamespace>
     <AssemblyName>DapperIdentity.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,20 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connections\ApplicationDbContext.cs" />
+    <Compile Include="Connections\DbManager.cs" />
     <Compile Include="Connections\SqlConnectionFactory.cs" />
-    <Compile Include="Identity\DbManager.cs" />
-    <Compile Include="Identity\IdentityRole.cs" />
-    <Compile Include="Identity\IdentityUser.cs" />
-    <Compile Include="Identity\RoleStore.cs" />
-    <Compile Include="Identity\RoleTable.cs" />
-    <Compile Include="Identity\UserClaimsTable.cs" />
-    <Compile Include="Identity\UserLoginsTable.cs" />
-    <Compile Include="Identity\UserRoleTable.cs" />
-    <Compile Include="Identity\UserStore.cs" />
-    <Compile Include="Identity\UserTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\UserRoleRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

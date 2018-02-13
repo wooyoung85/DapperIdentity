@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(DapperIdentity.Web.Startup))]
@@ -13,9 +11,9 @@ namespace DapperIdentity.Web
             ConfigureAuth(app);
         }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.Configure<PasswordHasherOptions>(options => options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3);
-        }
+        //public void ConfigureServices(IServiceCollection services)
+        //{
+        //    services.Configure<PasswordHasherOptions>(options => options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3);
+        //}
     }
 }

@@ -3,15 +3,17 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using DapperIdentity.Core.Interfaces;
+using DapperIdentity.Data.Connections;
 
 namespace DapperIdentity.Data.Repositories
 {
     public class BaseRepository
     {
-        private readonly IConnectionFactory _connectionFactory;
-        protected BaseRepository(IConnectionFactory connectionFactory)
+        private readonly SqlConnectionFactory _connectionFactory;        
+
+        protected BaseRepository()
         {
-            _connectionFactory = connectionFactory;
+            _connectionFactory = new SqlConnectionFactory();
         }
 
         /// <summary>
