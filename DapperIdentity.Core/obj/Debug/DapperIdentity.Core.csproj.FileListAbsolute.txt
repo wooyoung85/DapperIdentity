@@ -21,3 +21,11 @@ C:\Users\08408\Desktop\Dapper_Test\DapperIdentity-master\DapperIdentity-master\D
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Core\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Core\obj\Debug\DapperIdentity.Core.dll
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Core\obj\Debug\DapperIdentity.Core.pdb
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Core\bin\Debug\DapperIdentity.Core.dll.config
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Core\bin\Debug\DapperIdentity.Core.dll
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Core\bin\Debug\DapperIdentity.Core.pdb
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Core\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Core\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Core\obj\Debug\DapperIdentity.Core.csprojResolveAssemblyReference.cache
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Core\obj\Debug\DapperIdentity.Core.dll
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Core\obj\Debug\DapperIdentity.Core.pdb

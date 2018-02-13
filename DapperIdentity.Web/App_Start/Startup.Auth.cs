@@ -10,7 +10,6 @@ namespace DapperIdentity.Web
 {
     public partial class Startup
     {
-        // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
             // Enable the application to use a cookie to store information for the signed in user
@@ -21,12 +20,12 @@ namespace DapperIdentity.Web
                 Provider = new CookieAuthenticationProvider
                 {
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
-                    validateInterval: TimeSpan.FromMinutes(0), // <-- Note the timer is set for zero
+                    validateInterval: TimeSpan.FromMinutes(0), 
                     regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                }
+                },
+                SlidingExpiration = false,
+                ExpireTimeSpan = TimeSpan.FromMinutes(5)
             });
-            // Use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
         }
     }
 }

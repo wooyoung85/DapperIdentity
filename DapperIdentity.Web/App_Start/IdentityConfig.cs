@@ -18,7 +18,7 @@ namespace DapperIdentity.Web
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserRepository<ApplicationUser>());
-            //var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>() as DbManager));
+
             // 사용자 이름에 대한 유효성 검사 논리 구성
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {

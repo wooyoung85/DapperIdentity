@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using DapperIdentity.Web.Authorize;
+using System.Web.Mvc;
 
 namespace DapperIdentity.Web.Controllers
 {
@@ -16,6 +17,7 @@ namespace DapperIdentity.Web.Controllers
             return View();
         }
 
+        [CustomAuthorize(Roles ="Admin")]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

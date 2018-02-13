@@ -36,3 +36,15 @@ C:\Users\08408\Desktop\Dapper_Test\DapperIdentity-master\DapperIdentity-master\D
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Debug\Dapper.pdb
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Debug\Dapper.xml
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity-master\DapperIdentity-master\DapperIdentity.Data\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\bin\Debug\DapperIdentity.Data.dll
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\bin\Debug\DapperIdentity.Data.pdb
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\bin\Debug\Dapper.dll
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\bin\Debug\DapperIdentity.Core.dll
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\bin\Debug\DapperIdentity.Core.pdb
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\bin\Debug\Dapper.pdb
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\bin\Debug\Dapper.xml
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\obj\Debug\DapperIdentity.Data.csprojResolveAssemblyReference.cache
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\obj\Debug\DapperIdentity.Data.dll
+C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Data\obj\Debug\DapperIdentity.Data.pdb
