@@ -10,6 +10,7 @@ namespace DapperIdentity.Core.Interfaces
     public interface IUserRepository<TUser> : IUserRoleStore<TUser>,
         IUserPasswordStore<TUser>,
         IUserSecurityStampStore<TUser>,
+        IUserEmailStore<TUser>,
         IUserStore<TUser>
         where TUser : IdentityUser
     {

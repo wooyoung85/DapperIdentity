@@ -1,27 +1,41 @@
 ﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using DapperIdentity.Data.Repositories;
 using DapperIdentity.Web.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using DapperIdentity.Core.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace DapperIdentity.Web.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private ApplicationUserManager _userManager;
 
         public ManageController()
         {
-            _userManager = new UserManager<IdentityUser>(new UserRepository<IdentityUser>());
         }
 
-       //
+        public ManageController(ApplicationUserManager applicationUserManage)
+        {
+            _userManager = applicationUserManage;
+        }
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public ActionResult Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
@@ -53,10 +67,10 @@ namespace DapperIdentity.Web.Controllers
             {
                 return View(model);
             }
-            var result = await _userManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByIdAsync(User.Identity.GetUserId());
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
                     await SignInAsync(user, false);
@@ -66,12 +80,12 @@ namespace DapperIdentity.Web.Controllers
             AddErrors(result);
             return View(model);
         }
-                
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                _userManager?.Dispose();
+                UserManager?.Dispose();
             }
 
             base.Dispose(disposing);
@@ -88,21 +102,21 @@ namespace DapperIdentity.Web.Controllers
 
         private bool HasPassword()
         {
-            var user = _userManager.FindById(User.Identity.GetUserId());
+            var user = UserManager.FindById(User.Identity.GetUserId());
             return user?.PasswordHash != null;
         }
 
         public enum ManageMessageId
         {
-            ChangePasswordSuccess
+            ChangePasswordSuccess,
             Error
         }
 
         private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
-        private async Task SignInAsync(IdentityUser user, bool isPersistent)
+        private async Task SignInAsync(ApplicationUser user, bool isPersistent)
         {
-            var identity = await _userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
         }
         #endregion

@@ -389,9 +389,7 @@ C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\DapperI
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Antlr3.Runtime.dll
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\DapperIdentity.Core.dll
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\DapperIdentity.Data.dll
-C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\EntityFramework.dll
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.AspNet.Identity.Core.dll
-C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.AspNet.Identity.Owin.dll
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.Extensions.Configuration.Abstractions.dll
@@ -428,7 +426,6 @@ C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Dapper.
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\DapperIdentity.Core.pdb
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\DapperIdentity.Data.pdb
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Antlr3.Runtime.pdb
-C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\EntityFramework.xml
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.Extensions.Configuration.Abstractions.xml
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.Extensions.FileProviders.Abstractions.xml
@@ -447,7 +444,6 @@ C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\System.
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\System.Web.WebPages.Razor.xml
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.AspNet.Identity.Owin.xml
-C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.Owin.xml
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\Users\08408\Desktop\Dapper_Test\DapperIdentity\DapperIdentity.Web\bin\Microsoft.Owin.Security.xml

@@ -1,4 +1,5 @@
 ﻿using DapperIdentity.Core.Identity;
+using DapperIdentity.Data.Connections;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -12,7 +13,11 @@ namespace DapperIdentity.Web
     {
         public void ConfigureAuth(IAppBuilder app)
         {
-            // Enable the application to use a cookie to store information for the signed in user
+            // Configure the db context, user manager and signin manager to use a single instance per request             
+            //app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+
+            // 응용 프로그램에서 쿠키를 사용하여 로그인 한 사용자의 정보를 저장하도록 설정
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,

@@ -4,6 +4,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using DapperIdentity.Core.Identity;
 using DapperIdentity.Data.Repositories;
+using System.Threading.Tasks;
+using DapperIdentity.Data.IdentityStore;
 
 namespace DapperIdentity.Web
 {
@@ -17,7 +19,7 @@ namespace DapperIdentity.Web
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserRepository<ApplicationUser>());
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>());
 
             // 사용자 이름에 대한 유효성 검사 논리 구성
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
@@ -29,7 +31,7 @@ namespace DapperIdentity.Web
             // 암호에 대한 유효성 검사 논리 구성
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
+                RequiredLength = 8,
                 RequireNonLetterOrDigit = true,
                 RequireDigit = true,
                 RequireLowercase = true,
@@ -49,6 +51,13 @@ namespace DapperIdentity.Web
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+
+        public async Task<ApplicationUser> FindByEmailAsync(string email, string password)
+        {
+            UserRepository<ApplicationUser> userRepository = new UserRepository<ApplicationUser>();
+            var user = await userRepository.GetUserByEmail(email);
+            return await base.FindAsync(user.UserName, password);
         }
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="Connections\ApplicationDbContext.cs" />
     <Compile Include="Connections\DbManager.cs" />
     <Compile Include="Connections\SqlConnectionFactory.cs" />
+    <Compile Include="IdentityStore\UserStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
@@ -67,10 +68,6 @@
       <Project>{1388c53e-eb6b-4d9c-b374-0f15d7d7eb98}</Project>
       <Name>DapperIdentity.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Scripts\CreateExternalLoginsTable.sql" />
-    <Content Include="Scripts\CreateUserTable.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
