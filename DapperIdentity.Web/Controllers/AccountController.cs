@@ -13,11 +13,11 @@ namespace DapperIdentity.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser> userManager;
 
         public AccountController()
         {
-            _userManager = new UserManager<IdentityUser>(new UserRepository<IdentityUser>());
+            userManager = new UserManager<IdentityUser>(new UserRepository<IdentityUser>());
         }
 
         //
@@ -38,38 +38,11 @@ namespace DapperIdentity.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                //check to see if the account exists
-                var user = await _userManager.FindAsync(model.Email.TrimEnd(), model.Password);
-
-                // check if username/password pair match.                
+                var user = await userManager.FindAsync(model.Email.TrimEnd(), model.Password);
+            
                 if (user != null)
-                {
-                    // Now user have entered correct username and password.
-                    // Time to change the security stamp
-                    await _userManager.UpdateSecurityStampAsync(user.Id);
-                }               
-
-                if (user != null)
-                {
-                    //Check if the account has already had its email confirmed.  In this example, the account will always be confirmed, but this is here for demonstration purposes.
-                    if (!user.IsConfirmed)
-                    {
-                        //Check to see if the token is greater than 24 hours old
-                        if ((DateTime.UtcNow - user.CreatedDate).TotalDays > 1)
-                        {
-                            //If it's expired we can send a new confirmation token.  Otherwise if you prefer some other approach or logic feel free to experiment!
-                            await ResendConfirmationToken(user);
-                            ModelState.AddModelError("", "Email address has not been confirmed and has expired.  A new confirmation token has been generated and sent to you.");
-                            return View(model);
-                        }
-
-                        //account hasn't been confirmed but it also hasn't been 24 hours, inform the user.  This is also a great place to present some way the user can request a new confirmation token
-                        //or provide an update email address so that they can receive a new token if they had made a mistake.
-                        ModelState.AddModelError("", "Email address has not been confirmed.  Please check your e-mail!");
-                        return View(model);
-                    }
-
-                    //we're good, sign the user in
+                {                    
+                    await userManager.UpdateSecurityStampAsync(user.Id);
                     await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
                 }
@@ -95,111 +68,25 @@ namespace DapperIdentity.Web.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
-            {
-                //Generate a new confirmation token.  Here we are just storing a Guid as a string, but feel free to use whatever you want (if you use another type, make sure to update the user object
-                //and the user table accordingly).
+            {                
                 var confirmationToken = Guid.NewGuid().ToString();
-
-                //Create the User object.  If you have customized this beyond this example, make sure you update this to contain your new fields.  
-                //The confirmation token in our example is ultimately for show.  Make sure to modify the RegisterViewModel and the Register view if you have customized the object.
+                                
                 var user = new IdentityUser { UserName = model.Email.TrimEnd(), Nickname = model.Nickname.TrimEnd(), IsConfirmed = true, ConfirmationToken = confirmationToken, CreatedDate = DateTime.UtcNow };
 
-                //Create the user
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-                //If it's successful we log the user in and redirect to the home page
+                var result = await userManager.CreateAsync(user, model.Password);
+                
                 if (result.Succeeded)
                 {
-                    //send e-mail confirmation here and instead of logging the user in and taking them to the home page, redirect them to some page indicating a confirmation email has been sent to them
                     await SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
-
-            // If we got this far, something failed, redisplay form
+            
             return View(model);
         }
-
-        //
-        // GET: /Account/ForgotPassword
-        [AllowAnonymous]
-        public ActionResult ForgotPassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/ForgotPassword
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByNameAsync(model.Email.TrimEnd());
-                if (user == null || !await _userManager.IsEmailConfirmedAsync(user.Id))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
-        public ActionResult ForgotPasswordConfirmation()
-        {
-            return View();
-        }
-
-        //
-        // GET: /Account/ResetPassword
-        [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
-        {
-            return code == null ? View("Error") : View();
-        }
-
-        //
-        // POST: /Account/ResetPassword
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var user = await _userManager.FindByNameAsync(model.Email.TrimEnd());
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            var result = await _userManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            AddErrors(result);
-            return View();
-        }
-
-        //
-        // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
-        public ActionResult ResetPasswordConfirmation()
-        {
-            return View();
-        }
-
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
+        
         //
         // POST: /Account/LogOff
         [HttpPost]
@@ -209,54 +96,24 @@ namespace DapperIdentity.Web.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
-
-        //
-        // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
-        public ActionResult ExternalLoginFailure()
-        {
-            return View();
-        }
-
+        
         private async Task SignInAsync(IdentityUser user, bool isPersistent)
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-            var identity = await _userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            var identity = await userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
-        }
-
-        /// <summary>
-        /// This method generates a new confirmation token, updates the stored confirmation token and then sends a new confirmation email to the user.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        private async Task ResendConfirmationToken(IdentityUser user)
-        {
-            //create a new confirmation token
-            var confirmationToken = Guid.NewGuid().ToString();
-
-            //update the users confirmation token and reset the created date
-            user.ConfirmationToken = confirmationToken;
-            user.CreatedDate = DateTime.UtcNow;
-            await _userManager.UpdateAsync(user);
-        }
+        }        
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                _userManager?.Dispose();
+                userManager?.Dispose();
             }
 
             base.Dispose(disposing);
         }
 
         #region Helpers
-        // Used for XSRF protection when adding external logins
-        private const string XsrfKey = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
-
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
@@ -272,35 +129,6 @@ namespace DapperIdentity.Web.Controllers
                 return Redirect(returnUrl);
             }
             return RedirectToAction("Index", "Home");
-        }
-
-        internal class ChallengeResult : HttpUnauthorizedResult
-        {
-            public ChallengeResult(string provider, string redirectUri)
-                : this(provider, redirectUri, null)
-            {
-            }
-
-            public ChallengeResult(string provider, string redirectUri, string userId)
-            {
-                LoginProvider = provider;
-                RedirectUri = redirectUri;
-                UserId = userId;
-            }
-
-            public string LoginProvider { get; set; }
-            public string RedirectUri { get; set; }
-            public string UserId { get; set; }
-
-            public override void ExecuteResult(ControllerContext context)
-            {
-                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
-                if (UserId != null)
-                {
-                    properties.Dictionary[XsrfKey] = UserId;
-                }
-                context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
-            }
         }
         #endregion
     }
